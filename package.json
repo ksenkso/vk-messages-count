@@ -13,9 +13,7 @@
     "morgan": "~1.8.1",
     "node-sass-middleware": "0.9.8",
     "pug": "~2.0.0-beta11",
-    "serve-favicon": "~2.4.2"
-  },
-  "devDependencies": {
+    "serve-favicon": "~2.4.2",
     "express-session": "^1.15.4"
   }
 }
