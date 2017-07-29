@@ -8,7 +8,7 @@ var sassMiddleware = require('node-sass-middleware');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-
+const session = require('express-session');
 var app = express();
 
 // view engine setup
@@ -17,8 +17,13 @@ app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(express.cookieDecoder());
-app.use(express.session());
+//app.use(express.cookieDecoder());
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
