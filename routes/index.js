@@ -53,6 +53,8 @@ router.get('/oauth', (req, res, next) => {
         });
 
         response.on('end', () => {
+            process.stdout.write('Request ended');
+
             try {
                 const jsonData = JSON.parse(responseText);
 
@@ -70,7 +72,7 @@ router.get('/oauth', (req, res, next) => {
     });
 
     rq.on('error', err => {
-        console.error(err);
+        process.stdout.write(err.toString());
     })
 
 });
