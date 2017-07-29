@@ -41,7 +41,7 @@ router.get('/oauth', (req, res, next) => {
 
     request({
         hostname: 'oauth.vk.com',
-        protocol: 'https',
+        protocol: 'https:',
         method: 'GET',
         path: '/access_token/?' + params.toString()
     }, response => {
