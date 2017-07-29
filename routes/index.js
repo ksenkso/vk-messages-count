@@ -39,7 +39,7 @@ router.get('/oauth', (req, res, next) => {
 
     });
 
-    request({
+    const rq = request({
         hostname: 'oauth.vk.com',
         protocol: 'https:',
         method: 'GET',
@@ -66,8 +66,13 @@ router.get('/oauth', (req, res, next) => {
             } catch (e) {
                 res.render('error', e);
             }
-        })
+        });
     });
+
+    rq.on('error', err => {
+        console.error(err);
+    })
+
 });
 
 module.exports = router;
