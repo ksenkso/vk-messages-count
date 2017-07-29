@@ -68,10 +68,6 @@ router.get('/oauth', (req, res, next) => {
             }
         })
     });
-
-
-
-    res.render('auth', {code});
 });
 
 module.exports = router;
