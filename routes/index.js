@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
   if (req.session.user) {
       res.render('index', { title: 'my test vk-oauth app!!!' });
   } else {
-    const redirectURL = 'https://oauth.vk.com/authorize';
+    const redirectURL = 'https://oauth.vk.com/authorize/?';
     const params = new URLSearchParams({
         client_id: process.env.CLIENT_ID,
         redirect_uri: process.env.REDIRECT_URI,
