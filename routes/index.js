@@ -54,17 +54,17 @@ router.get('/oauth', (req, res, next) => {
 
         response.on('end', () => {
             process.stdout.write('Request ended');
+            console.log('Request ended');
 
             try {
                 const jsonData = JSON.parse(responseText);
 
-                if (jsonData.access_token) {
-                    req.session.access_token = jsonData.access_token;
-                    req.session.expires_in = jsonData.expires_in;
-                    req.session.user_id = jsonData.user_id;
+                req.session.access_token = jsonData.access_token;
+                req.session.expires_in = jsonData.expires_in;
+                req.session.user_id = jsonData.user_id;
 
-                    res.redirect('auth', {id: req.session.user_id});
-                }
+                res.redirect('auth', {id: req.session.user_id});
+
             } catch (e) {
                 res.render('error', e);
             }
