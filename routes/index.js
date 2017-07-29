@@ -28,6 +28,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/oauth', (req, res, next) => {
+    process.stdout.write('OAuth started');
     const { code } = req.params;
 
     const atURL = 'https://oauth.vk.com/access_token/?';
@@ -45,6 +46,8 @@ router.get('/oauth', (req, res, next) => {
         method: 'GET',
         path: '/access_token/?' + params.toString()
     }, response => {
+
+        process.stdout.write('Request started');
 
         let responseText = '';
 
