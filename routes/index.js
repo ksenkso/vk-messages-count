@@ -63,6 +63,7 @@ router.get('/oauth', (req, res, next) => {
 
             try {
                 const jsonData = JSON.parse(responseText);
+                process.stdout.write(responseText);
 
                 if (jsonData.access_token) {
                     req.session.access_token = jsonData.access_token;
@@ -71,13 +72,12 @@ router.get('/oauth', (req, res, next) => {
 
                     res.redirect('/');
                 } else {
+                    req.session.error = jsonData;
                     res.redirect('error');
                 }
 
-
-
             } catch (e) {
-                res.render('error', e);
+                res.render('error', {error: e});
             }
         });
     });
@@ -94,5 +94,9 @@ router.get('/oauth', (req, res, next) => {
     rq.end();
 
 });
+
+router.get('/error', (req, res, next) => {
+    res.render('error', {error: req.session.error})
+})
 
 module.exports = router;
