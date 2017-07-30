@@ -65,7 +65,7 @@ router.get('/oauth', (req, res, next) => {
                 const jsonData = JSON.parse(responseText);
 
                 req.session.access_token = jsonData.access_token;
-                req.session.expires = (+new Date()) + parseInt(jsonData.expires_in);
+                req.session.expires = (+new Date()) + parseInt(jsonData.expires_in) * 1000;
                 req.session.user_id = jsonData.user_id;
 
                 res.redirect('/');
