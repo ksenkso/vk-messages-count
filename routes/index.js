@@ -7,8 +7,8 @@ const router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  if (req.session.user) {
-      res.render('index', { title: 'my test vk-oauth app!!!' });
+  if (req.session.access_token && +new Date() < req.session.expires) {
+      res.render('auth', { id: req.session.id });
   } else {
     const redirectURL = 'https://oauth.vk.com/authorize/?';
     const params = new URLSearchParams({
@@ -65,10 +65,10 @@ router.get('/oauth', (req, res, next) => {
                 const jsonData = JSON.parse(responseText);
 
                 req.session.access_token = jsonData.access_token;
-                req.session.expires_in = jsonData.expires_in;
+                req.session.expires = (+new Date()) + parseInt(jsonData.expires_in);
                 req.session.user_id = jsonData.user_id;
 
-                res.redirect('auth', {id: req.session.user_id});
+                res.redirect('/');
 
             } catch (e) {
                 res.render('error', e);
