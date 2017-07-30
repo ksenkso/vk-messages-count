@@ -43,7 +43,7 @@ router.get('/oauth', (req, res, next) => {
     process.stdout.write(atURL + params.toString() + '\n');
 
     const rq = request({
-        port: 80,
+        port: 443,
         hostname: 'oauth.vk.com',
         method: 'GET',
         path: '/access_token/?' + params.toString()
