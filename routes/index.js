@@ -7,7 +7,7 @@ const router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  if (req.session.access_token && +new Date() < req.session.expires) {
+  if (req.session.access_token) {
       res.render('auth', { id: req.session.id });
   } else {
     const redirectURL = 'https://oauth.vk.com/authorize/?';
