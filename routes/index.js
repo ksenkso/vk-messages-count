@@ -7,6 +7,8 @@ const router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
+    console.log('Access token: ' + req.session.access_token);
+
   if (req.session.access_token) {
       res.render('auth', { id: req.session.id });
   } else {
