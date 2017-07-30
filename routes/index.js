@@ -28,17 +28,20 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/oauth', (req, res, next) => {
-    process.stdout.write('OAuth started');
+    process.stdout.write('OAuth started\n');
+
     const { code } = req.params;
 
     const atURL = 'https://oauth.vk.com/access_token/?';
     const params = new URLSearchParams({
         client_id: process.env.CLIENT_ID,
         redirect_uri: process.env.REDIRECT_URI,
-        client_secret: process.env.CLIENT_SEECRET,
+        client_secret: process.env.CLIENT_SECRET,
         code,
 
     });
+
+    process.stdout.write(atURL + params.toString() + '\n');
 
     const rq = request({
         hostname: 'oauth.vk.com',
