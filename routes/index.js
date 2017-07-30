@@ -43,8 +43,8 @@ router.get('/oauth', (req, res, next) => {
     process.stdout.write(atURL + params.toString() + '\n');
 
     const rq = request({
+        port: 80,
         hostname: 'oauth.vk.com',
-        protocol: 'https:',
         method: 'GET',
         path: '/access_token/?' + params.toString()
     }, response => {
@@ -76,8 +76,13 @@ router.get('/oauth', (req, res, next) => {
         });
     });
 
+    rq.on('connect', () => {
+        process.stdout.write('[Request] started');
+    });
+
     rq.on('error', err => {
-        process.stdout.write(err.toString());
+
+        process.stderr.write('[Error] ' + err.toString());
     })
 
 });
