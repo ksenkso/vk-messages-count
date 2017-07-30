@@ -49,7 +49,7 @@ router.get('/oauth', (req, res, next) => {
         path: '/access_token/?' + params.toString()
     }, response => {
 
-        process.stdout.write('Request started');
+        process.stdout.write('Request started' + '\n');
 
         let responseText = '';
 
@@ -58,37 +58,33 @@ router.get('/oauth', (req, res, next) => {
         });
 
         response.on('end', () => {
-            process.stdout.write('Request ended');
+            process.stdout.write('Request ended' + '\n');
             console.log('Request ended');
 
-            try {
-                const jsonData = JSON.parse(responseText);
-                process.stdout.write(responseText);
+            const jsonData = JSON.parse(responseText);
+            process.stdout.write(responseText + '\n');
 
-                if (jsonData.access_token) {
-                    req.session.access_token = jsonData.access_token;
-                    req.session.expires = (+new Date()) + parseInt(jsonData.expires_in) * 1000;
-                    req.session.user_id = jsonData.user_id;
+            if (jsonData.access_token) {
+                req.session.access_token = jsonData.access_token;
+                req.session.expires = (+new Date()) + parseInt(jsonData.expires_in) * 1000;
+                req.session.user_id = jsonData.user_id;
 
-                    res.redirect('/');
-                } else {
-                    req.session.error = jsonData;
-                    res.redirect('error');
-                }
-
-            } catch (e) {
-                res.render('error', {error: e});
+                res.redirect('/');
+            } else {
+                process.stderr.write('No access token\n');
+                req.session.error = 'No access token';
+                res.redirect('error');
             }
         });
     });
 
     rq.on('connect', () => {
-        process.stdout.write('[Request] started');
+        process.stdout.write('[Request] started\n');
     });
 
     rq.on('error', err => {
 
-        process.stderr.write('[Error] ' + err.toString());
+        process.stderr.write('[Error] ' + err.toString() + '\n');
     });
 
     rq.end();
