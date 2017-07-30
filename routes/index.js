@@ -32,12 +32,14 @@ router.get('/oauth', (req, res, next) => {
 
     const { code } = req.query;
 
+    process.stdout.write('Code: ' + code + '\n');
+
     const atURL = 'https://oauth.vk.com/access_token/?';
     const params = new URLSearchParams({
         client_id: process.env.CLIENT_ID,
         redirect_uri: process.env.REDIRECT_URI,
         client_secret: process.env.CLIENT_SECRET,
-        code
+        code: code
     });
 
     process.stdout.write(atURL + params.toString() + '\n');
@@ -59,7 +61,6 @@ router.get('/oauth', (req, res, next) => {
 
         response.on('end', () => {
             process.stdout.write('Request ended' + '\n');
-            console.log('Request ended');
 
             const jsonData = JSON.parse(responseText);
             process.stdout.write(responseText + '\n');
