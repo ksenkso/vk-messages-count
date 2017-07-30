@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
     console.log('Access token: ' + req.session.access_token);
 
   if (req.session.access_token) {
-      res.render('auth', { id: req.session.id });
+      res.render('auth', { id: req.session.user_id });
   } else {
     const redirectURL = 'https://oauth.vk.com/authorize/?';
     const params = new URLSearchParams({
