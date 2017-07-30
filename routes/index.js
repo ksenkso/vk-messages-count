@@ -83,7 +83,9 @@ router.get('/oauth', (req, res, next) => {
     rq.on('error', err => {
 
         process.stderr.write('[Error] ' + err.toString());
-    })
+    });
+
+    rq.end();
 
 });
 
