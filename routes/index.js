@@ -28,6 +28,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/oauth', (req, res, next) => {
+
     process.stdout.write('OAuth started\n');
 
     const { code } = req.query;
@@ -66,6 +67,7 @@ router.get('/oauth', (req, res, next) => {
             process.stdout.write(responseText + '\n');
 
             if (jsonData.access_token) {
+                process.stdout.write('Access token: ' + jsonData.access_token + '\n');
                 req.session.access_token = jsonData.access_token;
                 req.session.expires = (+new Date()) + parseInt(jsonData.expires_in) * 1000;
                 req.session.user_id = jsonData.user_id;
@@ -94,6 +96,6 @@ router.get('/oauth', (req, res, next) => {
 
 router.get('/error', (req, res, next) => {
     res.render('error', {error: req.session.error})
-})
+});
 
 module.exports = router;
